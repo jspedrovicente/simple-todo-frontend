@@ -1,0 +1,109 @@
+body{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-family: cursive, sans-serif;
+}
+.header{
+    margin-top: 2em;
+    display: flex;
+    justify-content: center;
+}
+h1, h2, h3, h4{
+    font-weight: bold;
+}
+h1{
+    font-size: 35px;
+}
+h2{
+    font-size: 24px;
+}
+h3{
+    font-size: 9px;
+    margin-top: .3em;
+
+}
+h4{
+    font-size: 11px;
+}
+nav{
+    margin-top: 3em;
+    display: flex;
+    width: 80%;
+    justify-content: space-between;
+    border-bottom: solid 2.5px rgb(24, 23, 23);
+    border-radius: 3px;
+}
+
+.nav-total{
+    margin-top: 20px;
+    margin-bottom: 0;
+    font-size: 13px;
+    font-weight: bold;
+}
+
+.btn-primary{
+    border: solid black 1px;
+    box-shadow: 3px 3px 3px black;
+    margin-right: 5px;
+}
+
+body > *{
+    max-width: 1280px;
+    width: 80%;
+}
+@media screen and (max-width: 1024px){
+    body > * {
+        width: 99%;
+    }
+}
+.todo-container{
+    border: solid 3px black;
+    border-radius: 2px;
+    margin: 2em 0 2em 0;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.todo-container-selecionado{
+    background-color: #6aa84f;
+    color: white;
+}
+.container-left-urg{
+    display: flex;
+    flex-direction: row;
+}
+.description{
+    font-size: 13px;
+}
+.container-left{
+    width: 70%;
+    margin-left: 10px;
+}
+.container-right{
+    margin-right: 10px;
+}
+.title-urgent{
+    background-color: #cf2a27;
+    color: white;
+    height: 1em;
+    margin: .4em 0 0 .4em;
+    border-radius: 4px;
+    padding: 0 .2em .2em .2em;
+    box-shadow: 2px 2px 2px gray;
+}
+.title-dificulty{
+    margin: .5em 0 0 0;
+}
+.buttons{
+    display: flex;
+    justify-content: right;
+    font-size: 13px;
+}
+i{
+    margin: .3em;
+}
+.transparent{
+    visibility: hidden;
+}
+
