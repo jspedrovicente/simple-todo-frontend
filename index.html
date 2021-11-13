@@ -20,94 +20,116 @@
             <h1> My To-do List</h1>
         </div>
         <nav> <div>
-            <p class="nav-total">Total of X todos</p>
+            <p class="nav-total">Total of <span class="amount-of-items">X</span> todos</p>
         </div>
         <div>
-            <a class="btn btn-primary btn-sm " href="#" role="button">Create a To-do</a>
+            <a class="btn btn-primary btn-sm " href="newtodo.html" role="button">Create a To-do</a>
         </div>
     </nav>
        <article>
-           <div class="todo-container todo-container-selecionado">
-            <div class="container-left">
-                <div class="container-left-urg">
-            <div class="title-todo">
-                    <h2>Take a shower</h2>
-               </div>
-               <div class="title-urgent">
-                <h3>Urgent</h3>
-               </div>
-                </div>
-               <div class="description">
-                <p>It'd be nice to take a shower this week, it's been a while :D</p>
-                </div>
-            </div>
-            <div class="container-right">
-               <div class="title-dificulty">
-                <h4>Difficulty: Easy</h4>
-               </div>
-               <div class="buttons">
-                <i class="fas fa-ban" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Mark as Incomplete"></i>
-                <i class="far fa-trash-alt" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Delete Item"></i>
-               </div>
-            </div>   
-           </div>
+
            
-           <div class="todo-container">
+           <!-- Using this as template -->
+           <div class="todo-container" id="template">
+
                 <div class="container-left">
                     <div class="container-left-urg">
                 <div class="title-todo">
-                    <h2>Plan a trip to Teacher Jamil</h2>
+                    <h2 class="title-card">Plan a trip to Teacher Jamil</h2>
                 </div>
-                <div class="title-urgent transparent">
+                <div class="title-urgent">
                     <h3>Urgent</h3>
                 </div>
                 </div>
                 <div class="description">
-                    <p>I really enjoy visiting that place. I should find some time to go back there and enjoy that beutiful scenerie and the awesome people of that nice town. All around goodness, you know?</p>
+                    <p class="description-card">I really enjoy visiting that place. I should find some time to go back there and enjoy that beutiful scenerie and the awesome people of that nice town. All around goodness, you know?</p>
                 </div>
             </div>
             
             <div class="container-right">
                 <div class="title-dificulty">
-                    <h4>Difficulty: Hard</h4>
+                    <h4 class="difficulty-card">Difficulty: Hard</h4>
                 </div>
                 <div class="buttons">
-                    <i class="fas fa-check" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Mark as Done"></i>
-                    <i class="far fa-trash-alt" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Delete Item"></i>
-                </div>
-            </div>
-        </div>
-            <div class="todo-container">
-                <div class="container-left">
-                    <div class="container-left-urg">
-                <div class="title-todo">
-                    <h2>Watch my favorite Soap Opera</h2>
-                </div>
-                <div class="title-urgent transparent">
-                    <h3> Urgent</h3>
-                </div>
-                </div>
-                <div class="description">
-                    <p>I should really watch an episode of "La Quinceañera"</p>
-                </div>
-            </div>
-            <div class="container-right">
-                <div class="title-dificulty">
-                    <h4>Difficulty: Medium</h4>
-                </div>
-                <div class="buttons">
-                    <i class="fas fa-check" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Mark as Done"></i>
-                    <i class="far fa-trash-alt" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Delete Item"></i>
+                    <i class="fas fa-check" title="Mark as Done"></i>
+                    <i class="far fa-trash-alt" title="Delete Item"></i>
                 </div>
             </div>
             </div>
+            
        </article>
     </body>
     
     <script>
-    // Initializing tooltip
-    var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
-        var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
-          return new bootstrap.Tooltip(tooltipTriggerEl)
-        })</script>
+
+
+    
+    var list = [
+        {
+            id: 34,
+            title: "Comer um pastel",
+            description: "Preciso comer varios pasteis mas um pode ser tambem",
+            urgent: false,
+            difficulty: "Medium",
+            done: true
+        },
+        {
+            id: 44,
+            title: "Comer um coco",
+            description: "Preciso comer varios cocos mas um pode ser tambem",
+            urgent: true,
+            difficulty: "Easy",
+            done: false
+        }
+    ]
+
+        // Defining quantity of items on list 
+        document.querySelector('.amount-of-items').innerHTML =`${list.length}`;
+
+    for (var i = list.length - 1; i >= 0; i--) {
+            person = list[i];
+            insertPersonIntoPage(i, person);
+
+        }
+
+        function cloneTemplate() {
+            var template = document.querySelector('#template');
+            var clone = template.cloneNode(true);
+            return clone;
+        }
+
+        function insertPersonIntoPage(i, person) {
+            var clone = cloneTemplate();
+
+            // Adjust values
+            clone.id = 'main' + i;
+            clone.querySelector('.title-card').innerHTML = `${person.title}`;
+            clone.querySelector('.description-card').innerHTML = `${person.description}`;
+            clone.querySelector('.difficulty-card').innerHTML = `Difficulty: ${person.difficulty}`;
+
+
+            // Adjusting Color based on status
+            if(person.done == true){
+                clone.classList.add('todo-container-selecionado');
+                
+            }
+
+            // Adjusting Urgency based on status
+            if(person.urgent == false){
+                clone.querySelector('.title-urgent').classList.add('transparent');
+                
+            }
+            
+            // Defing the display type so the clone is visible
+            clone.style.display = 'flex';
+
+            // Insert into page
+            template.after(clone);
+        }
+
+
+        
+        
+        
+    </script>
 </html>

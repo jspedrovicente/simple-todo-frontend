@@ -107,3 +107,7 @@ i{
     visibility: hidden;
 }
 
+/* Template base */
+#template{
+    display:none;
+}
