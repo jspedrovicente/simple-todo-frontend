@@ -2,7 +2,9 @@ body{
     display: flex;
     flex-direction: column;
     align-items: center;
-    font-family: cursive, sans-serif;
+    font-family: 'Courier New', Courier, monospace;
+    background-color: rgba(248, 247, 198, 0.835);
+    background-image: url(./background-yellow.jpeg);
 }
 .header{
     margin-top: 2em;
@@ -58,15 +60,23 @@ body > *{
     }
 }
 .todo-container{
-    border: solid 3px black;
-    border-radius: 2px;
+    border: solid 2px black;
+    border-radius: 7px;
     margin: 2em 0 2em 0;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    padding: 8px 10px;
+    background-color: rgb(255, 255, 255);
 }
 .todo-container-selecionado{
-    background-color: #6aa84f;
+    background-color: #529139;
+    color: white;
+}
+.todo-container-selecionado .mark-done-form{
+    visibility: hidden;
+}
+.todo-container-selecionado i{
     color: white;
 }
 .container-left-urg{
@@ -78,10 +88,6 @@ body > *{
 }
 .container-left{
     width: 70%;
-    margin-left: 10px;
-}
-.container-right{
-    margin-right: 10px;
 }
 .title-urgent{
     background-color: #cf2a27;
@@ -111,3 +117,13 @@ i{
 #template{
     display:none;
 }
+
+.button-confirm{
+    border: none;
+    background: none;
+}
+/* Making the icons work */
+
+/* .clickable-awesome-font{ */
+    /* cursor: pointer; */
+/* } */
