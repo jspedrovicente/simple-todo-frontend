@@ -4,20 +4,27 @@
     <html lang="pt-br">
     <head>
         <title>
-            Página de exemplo estrutura básica</title>
+            My To-do List</title>
             <meta charset="utf-8">
             <meta name="Author" content="José Pedro">
             <meta name="Description" content="conteudo, inicio">
             <meta name="viewport" content="width=device-width, initial-scale=1">
+            <meta name="description" content="Faça uma lista para nunca mais esquecer todo seus compromissos!">
+            <meta property="og:title" content="My To-do List">
+            <meta property="og:url" content="http://44.197.208.159/">
+            <meta property="og:description" content="Faça uma lista para nunca mais esquecer todo seus compromissos!">
+            <meta property="og:image" content="https://ilovehandles.com/wp-content/uploads/2018/09/notepad-on-notepad.jpg">
+
             <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
+            <link rel="icon" type="image/png" href="./pencil-icon.png"/>
             <link href="style.css" rel="stylesheet">
             <script src="https://kit.fontawesome.com/352b572d6d.js" crossorigin="anonymous"></script>
             <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ" crossorigin="anonymous"></script>
-            
+            <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>            
     </head>
     <body>
         <div class="header">
-            <h1> My To-do List</h1>
+            <h1 class="header-title"> My To-do List</h1>
         </div>
         <nav> <div>
             <p class="nav-total">Total of <span class="amount-of-items">X</span> todos</p>
@@ -51,8 +58,20 @@
                     <h4 class="difficulty-card">Difficulty: Hard</h4>
                 </div>
                 <div class="buttons">
-                    <i class="fas fa-check" title="Mark as Done"></i>
-                    <i class="far fa-trash-alt" title="Delete Item"></i>
+                    <form class="mark-done-form" action="http://44.197.208.159/todos/1/done" method="post">
+                        <button class="button-confirm" type="submit">
+                        <span class='clickable-awesome-font'>
+                            <i class="fas fa-check" title="Mark as Done"></i>
+                        </span>
+                        </button>
+                    </form>
+                    <form class="delete-form" action="http://44.197.208.159/todos/1/delete" method="post">
+                        <button class="button-confirm" type="submit">
+                        <span class='clickable-awesome-font'>
+                            <i class="far fa-trash-alt" title="Delete Item"></i>
+                        </span>
+                        </button>
+                    </form>
                 </div>
             </div>
             </div>
@@ -62,74 +81,67 @@
     
     <script>
 
+        (async () => {
 
+            const list = await getTodos(); 
+
+            // Defining quantity of items on list 
+            document.querySelector('.amount-of-items').innerHTML =`${list.length}`;
     
-    var list = [
-        {
-            id: 34,
-            title: "Comer um pastel",
-            description: "Preciso comer varios pasteis mas um pode ser tambem",
-            urgent: false,
-            difficulty: "Medium",
-            done: true
-        },
-        {
-            id: 44,
-            title: "Comer um coco",
-            description: "Preciso comer varios cocos mas um pode ser tambem",
-            urgent: true,
-            difficulty: "Easy",
-            done: false
-        }
-    ]
-
-        // Defining quantity of items on list 
-        document.querySelector('.amount-of-items').innerHTML =`${list.length}`;
-
-    for (var i = list.length - 1; i >= 0; i--) {
-            person = list[i];
-            insertPersonIntoPage(i, person);
-
-        }
-
-        function cloneTemplate() {
-            var template = document.querySelector('#template');
-            var clone = template.cloneNode(true);
-            return clone;
-        }
-
-        function insertPersonIntoPage(i, person) {
-            var clone = cloneTemplate();
-
-            // Adjust values
-            clone.id = 'main' + i;
-            clone.querySelector('.title-card').innerHTML = `${person.title}`;
-            clone.querySelector('.description-card').innerHTML = `${person.description}`;
-            clone.querySelector('.difficulty-card').innerHTML = `Difficulty: ${person.difficulty}`;
-
-
-            // Adjusting Color based on status
-            if(person.done == true){
-                clone.classList.add('todo-container-selecionado');
+            for (var i = list.length - 1; i >= 0; i--) {
+                person = list[i];
+                insertPersonIntoPage(i, person);
+    
+            }
+    
+            function cloneTemplate() {
+                var template = document.querySelector('#template');
+                var clone = template.cloneNode(true);
+                return clone;
+            }
+    
+            function insertPersonIntoPage(i, person) {
+                var clone = cloneTemplate();
+    
+                // Adjust values
+                clone.id = 'main' + i;
+                clone.querySelector('.title-card').innerHTML = `${person.title}`;
+                clone.querySelector('.description-card').innerHTML = `${person.description}`;
+                clone.querySelector('.difficulty-card').innerHTML = `Difficulty: ${person.difficulty}`;
+                const deleteActionUrl = `http://44.197.208.159/todos/${person.id}/delete`;
+                clone.querySelector('.delete-form').setAttribute('action', deleteActionUrl);
+                const doneActionUrl = `http://44.197.208.159/todos/${person.id}/done`;
+                clone.querySelector('.mark-done-form').setAttribute('action', doneActionUrl);
                 
+    
+    
+                // Adjusting Color based on status
+                if(person.done == true){
+                    clone.classList.add('todo-container-selecionado');
+                    
+                }
+    
+                // Adjusting Urgency based on status
+                if(person.urgent == false){
+                    clone.querySelector('.title-urgent').classList.add('transparent');
+                    
+                }
+                
+                // Defing the display type so the clone is visible
+                clone.style.display = 'flex';
+    
+                // Insert into page
+                template.after(clone);
             }
 
-            // Adjusting Urgency based on status
-            if(person.urgent == false){
-                clone.querySelector('.title-urgent').classList.add('transparent');
-                
-            }
-            
-            // Defing the display type so the clone is visible
-            clone.style.display = 'flex';
+            function getTodos() {
+                return $.ajax({url: "http://44.197.208.159/todos"});
+            }                
+               
 
-            // Insert into page
-            template.after(clone);
-        }
-
-
-        
-        
+            // Making the click even happen
+            // document.getElementsByClassName("clickable-awesome-font").addEventListener("click", deleteTodo);
+        })()
         
     </script>
 </html>
